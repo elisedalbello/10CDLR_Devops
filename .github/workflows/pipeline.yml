@@ -137,4 +137,15 @@ jobs:
       url: devopsfiap-on-app-dng3eyhzemanafb9.eastus2-01.azurewebsites.net 
     steps: 
       - name: Download JAR 
-        uses: actions/dow
+        uses: actions/download-artifact@v4
+        with: 
+          name: artifact 
+          path: target/ 
+           
+      - name: DeployAzure 
+        uses: azure/webapps-deploy@v2 
+        with: 
+          app-name: devopsfiap-on-app 
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
+          package: '${{ github.workspace }}/target/*.jar'
+          clean: false
