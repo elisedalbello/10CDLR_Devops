@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galeria simples</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .card { max-width: 720px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 12px; }
+    .img-wrap { display: flex; justify-content: center; align-items: center; height: 420px; background: #f6f6f6; border-radius: 12px; overflow: hidden; }
+    img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .controls { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+    button { padding: 10px 14px; border: 1px solid #ccc; background: #fff; border-radius: 10px; cursor: pointer; }
+    button:hover { background: #f0f0f0; }
+    .caption { text-align: center; margin-top: 10px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Galeria</h2>
+
+    <div class="img-wrap">
+      <img id="photo" src="" alt="Imagem selecionada" />
+    </div>
+
+    <div class="controls">
+      <button id="prevBtn">Anterior</button>
+      <button id="nextBtn">Próxima</button>
+      <button id="randomBtn">Aleatória</button>
+    </div>
+
+    <div class="caption" id="caption"></div>
+  </div>
+
+  <script>
+    // Ajuste os nomes conforme os arquivos em /static/img
+    const images = [
+      { src: "img/foto1.jpg", caption: "Siames" },
+      { src: "img/foto2.jpg", caption: "Maine Coon" },
+      { src: "img/foto3.jpg", caption: "Sphinx" },
+      { src: "img/foto4.jpg", caption: "Persa" },
+      { src: "img/foto5.jpg", caption: "Bengal" },
+      { src: "img/foto6.jpg", caption: "Pelo Curto Brasileiro" },
+    ];
+
+    let index = 0;
+
+    function show(i) {
+      index = (i + images.length) % images.length;
+      const item = images[index];
+      document.getElementById("photo").src = item.src;
+      document.getElementById("caption").textContent = item.caption ?? "";
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => show(index - 1));
+    document.getElementById("nextBtn").addEventListener("click", () => show(index + 1));
+    document.getElementById("randomBtn").addEventListener("click", () => show(Math.floor(Math.random() * images.length)));
+
+    // Inicializa
+    show(0);
+  </script>
+</body>
+</html>
